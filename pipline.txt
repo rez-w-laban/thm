@@ -1,0 +1,12 @@
+Your pipeline
+Inputs: a set of formulas F, plus a random subset of pairwise similarities Sij (observed edges only).
+
+Fingerprints (FP): build your semantic “mini-world” truth table + structural counts for each formula. (Order-respecting: uses only the formula text.)
+
+GNN completion (C-simple): use FP as node features and the observed similarities as weighted edges to train a GNN encoder + simple decoder that predicts the missing similarities. Output is a completed kernel S^ over all formulas. (Still order-respecting: you never used truth labels here.)
+
+Spectral embedding (teacher): run eigendecomposition of S^ to get a low-rank embedding Zteacher s.t. S^≈ZZ⊤.
+
+Student (FP → Z): train your student MLP to map FP → Zteacher using only the train nodes; then Procrustes-align on train to fix rotation. This gives you Zpred for any formula from FP alone. (This is the key inductive piece for truly new formulas.)
+
+Truth head: train a classifier (your MLP works great) on Zpred for train nodes → predict truth on val/test (and later on new formulas by only computing FP → Zpred → truth).
