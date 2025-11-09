@@ -1,0 +1,1 @@
+I want you to start understanding everything that is happening. consider the task as "graph completion" ask chatgpt to help you solve the same problem using matrix vectorization and compare results. BUT you have to be able to do things yourself for consistancy. Starting now we need to reduce how much we rely on chatgpt
